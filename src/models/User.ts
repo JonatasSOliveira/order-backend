@@ -1,27 +1,25 @@
-import { ModelAttributes, DataTypes, Model } from "sequelize";
-import connection from "../connection";
+import { DataTypes } from "sequelize";
+import GenericModel from "./GenericModel";
 
-export default class User extends Model {
+export default class User extends GenericModel {
   public id!: number;
+
+  public static initModel(): void {
+    super.initModel({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      login: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+  }
 }
 
-User.init(
-  {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    login: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize: connection,
-    underscored: true,
-  }
-);
+User.initModel();
