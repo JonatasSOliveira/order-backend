@@ -14,11 +14,11 @@ const app = express();
 
 app.use(express.json());
 
-app.listen(APP_PORT, () => {
+app.listen(APP_PORT, async () => {
   try {
-    connection.authenticate();
-    connection.sync();
-    new Routes(app).iniciarRotas();
+    await connection.authenticate();
+    await connection.sync();
+    new Routes(app).initRoutes();
     console.log(`Project running on ${APP_PORT}`);
   } catch (error) {
     console.log(`Error on start projetct: ${error}`);

@@ -1,15 +1,17 @@
+import UserDTO from "../dtos/UserDTO";
 import IController from "../interfaces/IController";
+import User from "../models/User";
 
 export default class UserController implements IController<UserDTO> {
-  async criar(model: UserDTO): Promise<number> {
-    return 0;
+  async create(dto: UserDTO): Promise<number> {
+    return (await User.create({ ...dto })).id;
   }
 
-  async alterar(id: number, model: UserDTO): Promise<void> {}
+  async update(id: number, model: UserDTO): Promise<void> {}
 
-  async deletar(id: number): Promise<void> {}
+  async delete(id: number): Promise<void> {}
 
-  async listarTodos(): Promise<UserDTO[]> {
+  async listAll(): Promise<UserDTO[]> {
     return [];
   }
 }

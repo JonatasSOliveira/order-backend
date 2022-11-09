@@ -1,3 +1,4 @@
+import { RoutesV1 } from "./v1/index";
 import { Express } from "express";
 
 export default class Routes {
@@ -7,7 +8,7 @@ export default class Routes {
     this.app = app;
   }
 
-  public iniciarRotas() {
-    this.app.get("/", (req, res) => res.send({ hello: "world!" }));
+  public initRoutes() {
+    this.app.use("/api", new RoutesV1().initRoutes());
   }
 }

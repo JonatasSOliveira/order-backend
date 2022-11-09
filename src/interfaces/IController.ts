@@ -1,6 +1,6 @@
-export default interface IController<T> {
-  criar(model: T): Promise<number>;
-  listarTodos(): Promise<T[]>;
-  alterar(id: number, model: T): Promise<void>;
-  deletar(id: number): Promise<void>;
+export default interface IController<DTO> {
+  create(dto: DTO): Promise<number>;
+  listAll(): Promise<DTO[]>;
+  update(id: number, dto: DTO): Promise<void>;
+  delete(id: number): Promise<void>;
 }
