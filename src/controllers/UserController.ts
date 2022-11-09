@@ -4,7 +4,7 @@ import User from "../models/User";
 
 export default class UserController implements IController<UserDTO> {
   async create(userDTO: UserDTO): Promise<number> {
-    return (await User.create({ ...userDTO })).id;
+    return Number((await User.create({ ...userDTO })).id);
   }
 
   async update(id: number, userDTO: UserDTO): Promise<void> {

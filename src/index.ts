@@ -17,7 +17,7 @@ app.use(express.json());
 app.listen(APP_PORT, async () => {
   try {
     await connection.authenticate();
-    await connection.sync();
+    await connection.sync({ force: true });
     new Routes(app).initRoutes();
     console.log(`Project running on ${APP_PORT}`);
   } catch (error) {
