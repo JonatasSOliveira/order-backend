@@ -3,19 +3,28 @@ import IController from "../interfaces/IController";
 import User from "../models/User";
 
 export default class UserController implements IController<UserDTO> {
-  async create(userDTO: UserDTO): Promise<number> {
+  public async create(userDTO: UserDTO): Promise<number> {
     return Number((await User.create({ ...userDTO })).id);
   }
 
-  async update(id: number, userDTO: UserDTO): Promise<void> {
+  public async update(id: number, userDTO: UserDTO): Promise<void> {
     await User.update({ ...userDTO }, { where: { id } });
   }
 
-  async delete(id: number): Promise<void> {
+  public async delete(id: number): Promise<void> {
     await User.update({ deleted_at: new Date() }, { where: { id } });
   }
 
-  async listAll(): Promise<UserDTO[]> {
+  public async listAll(): Promise<UserDTO[]> {
     return await User.findAll();
+  }
+
+  public async login(login: string, password: string): Promise<UserDTO> {
+    return await User.findOne({
+      where: {
+        login: login,
+        password: password
+      }
+    });
   }
 }

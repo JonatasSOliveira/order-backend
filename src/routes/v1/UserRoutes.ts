@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import UserController from "../../controllers/UserController";
@@ -50,5 +50,19 @@ export default class UserRoutes extends GenericRoutes<UserDTO> {
     const userId = Number(req.params.id);
     await this.userController.delete(userId);
     res.status(200).send(null);
+  }
+
+  protected async getCustomRouter(router: Router) {
+    return router;
+  }
+
+  private async login(
+    req: Request<ParamsDictionary, any, UserDTO, ParsedQs, Record<string, any>>,
+    res: Response<UserDTO, Record<string, any>>
+  ): Promise<void> {
+    const { login, password }  = req.body;
+
+    const user = await this.userController.login(login, password);
+    res.status(200).send(user);
   }
 }

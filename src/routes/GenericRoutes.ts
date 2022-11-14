@@ -5,6 +5,7 @@ import { ParsedQs } from "qs";
 export default abstract class GenericRoutes<DTO> {
   protected abstract getSingularRoutePath(): string;
   protected abstract getPluralRoutePath(): string;
+  protected abstract getCustomRouter(router: Router): Router;
 
   protected abstract listAll(
     req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
@@ -35,6 +36,8 @@ export default abstract class GenericRoutes<DTO> {
       .route(`/${singularRoutePath}/:id`)
       .put((req, res) => this.update(req, res))
       .delete((req, res) => this.delete(req, res));
+
+    router = this.getCustomRouter(router);
 
     return router;
   }
