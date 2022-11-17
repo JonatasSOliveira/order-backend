@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
+import jwt from 'jsonwebtoken';
+
 import UserController from "../../controllers/UserController";
 import UserDTO from "../../dtos/UserDTO";
 import GenericRoutes from "../GenericRoutes";
@@ -52,17 +54,25 @@ export default class UserRoutes extends GenericRoutes<UserDTO> {
     res.status(200).send(null);
   }
 
-  protected async getCustomRouter(router: Router) {
+  protected getCustomRouter(router: Router): Router {
     return router;
   }
 
   private async login(
     req: Request<ParamsDictionary, any, UserDTO, ParsedQs, Record<string, any>>,
-    res: Response<UserDTO, Record<string, any>>
+    res: Response<{ user: UserDTO, token: string }, Record<string, any>>
   ): Promise<void> {
-    const { login, password }  = req.body;
+    const login = req.body.login!;
+    const password = req.body.password!;
 
     const user = await this.userController.login(login, password);
-    res.status(200).send(user);
+
+    if (!user) {
+      res.status(401).send();
+      return;
+    }
+
+    const token = jwt.sign(user, process.env.APP_PRIVATE_KEY!);
+    res.status(200).send({ user, token });
   }
 }

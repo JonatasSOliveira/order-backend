@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, ModelAttributes } from "sequelize";
 import crypto from "crypto";
 
 import GenericModel from "./GenericModel";
@@ -9,7 +9,7 @@ export default class User extends GenericModel {
   public password!: string;
 
   public static initModel(): void {
-    super.initModel({
+    const userAttributes: ModelAttributes = {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -21,8 +21,11 @@ export default class User extends GenericModel {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-    });
+      }
+    }
+
+    const modelAttributes = Object.assign(userAttributes, super.getDefaultAttributes());
+    User.init(modelAttributes, super.getDefaultModelConfig());
   }
 }
 

@@ -19,7 +19,7 @@ export default class UserController implements IController<UserDTO> {
     return await User.findAll();
   }
 
-  public async login(login: string, password: string): Promise<UserDTO> {
+  public async login(login: string, password: string): Promise<UserDTO | null> {
     return await User.findOne({
       where: {
         login: login,

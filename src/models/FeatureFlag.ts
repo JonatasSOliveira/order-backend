@@ -1,10 +1,10 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, ModelAttributes } from "sequelize";
 
 import GenericModel from "./GenericModel";
 
 export default class FeatureFlag extends GenericModel {
   public static initModel(): void {
-    super.initModel({
+    const featureFlagAttributes: ModelAttributes = {
       code: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -17,7 +17,11 @@ export default class FeatureFlag extends GenericModel {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-    });
+    };
+
+    const modelAttributes = Object.assign(featureFlagAttributes, this.getDefaultAttributes());
+
+    FeatureFlag.init(modelAttributes, super.getDefaultModelConfig());
   }
 }
 

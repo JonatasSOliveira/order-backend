@@ -1,8 +1,8 @@
-import { DataTypes, Model, ModelAttributes } from "sequelize";
+import { DataTypes, InitOptions, Model, ModelAttributes } from "sequelize";
 import connection from "../connection";
 
 export default class GenericModel extends Model {
-  private static getDefaultAttributes(): ModelAttributes {
+  protected static getDefaultAttributes(): ModelAttributes {
     return {
       deleted_at: {
         type: DataTypes.DATE,
@@ -11,13 +11,10 @@ export default class GenericModel extends Model {
     };
   }
 
-  protected static initModel(modelAttributes: ModelAttributes): void {
-    GenericModel.init(
-      { ...modelAttributes, ...this.getDefaultAttributes() },
-      {
-        sequelize: connection,
-        underscored: true,
-      }
-    );
+  protected static getDefaultModelConfig(): InitOptions {
+    return {
+      sequelize: connection,
+      underscored: true,
+    }
   }
 }
