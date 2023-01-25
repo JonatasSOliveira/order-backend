@@ -1,5 +1,6 @@
-import UserDTO from "../dtos/UserDTO";
 import IController from "../interfaces/IController";
+
+import UserDTO from "../dtos/UserDTO";
 import User from "../models/User";
 
 export default class UserController implements IController<UserDTO> {
@@ -23,8 +24,8 @@ export default class UserController implements IController<UserDTO> {
     return await User.findOne({
       where: {
         login: login,
-        password: password
-      }
+        password: password,
+      },
     });
   }
 }

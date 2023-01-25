@@ -4,7 +4,6 @@ import crypto from "crypto";
 import GenericModel from "./GenericModel";
 
 export default class User extends GenericModel {
-  public id?: number;
   public login!: string;
   public password!: string;
 
@@ -21,10 +20,13 @@ export default class User extends GenericModel {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-      }
-    }
+      },
+    };
 
-    const modelAttributes = Object.assign(userAttributes, super.getDefaultAttributes());
+    const modelAttributes = Object.assign(
+      userAttributes,
+      super.getDefaultAttributes()
+    );
     User.init(modelAttributes, super.getDefaultModelConfig());
   }
 }

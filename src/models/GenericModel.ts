@@ -2,6 +2,8 @@ import { DataTypes, InitOptions, Model, ModelAttributes } from "sequelize";
 import connection from "../connection";
 
 export default class GenericModel extends Model {
+  public id?: number;
+
   protected static getDefaultAttributes(): ModelAttributes {
     return {
       deleted_at: {
@@ -15,6 +17,6 @@ export default class GenericModel extends Model {
     return {
       sequelize: connection,
       underscored: true,
-    }
+    };
   }
 }

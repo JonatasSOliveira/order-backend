@@ -1,31 +1,30 @@
 import { DataTypes, ModelAttributes } from "sequelize";
-
 import GenericModel from "./GenericModel";
 
-export default class FeatureFlag extends GenericModel {
+export default class Product extends GenericModel {
   public static initModel(): void {
-    const featureFlagAttributes: ModelAttributes = {
-      code: {
+    const productAttributes: ModelAttributes = {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
-      is_enabled: {
-        type: DataTypes.BOOLEAN,
+      price: {
+        type: DataTypes.DOUBLE,
         allowNull: false,
       },
     };
 
     const modelAttributes = Object.assign(
-      featureFlagAttributes,
+      productAttributes,
       this.getDefaultAttributes()
     );
 
-    FeatureFlag.init(modelAttributes, super.getDefaultModelConfig());
+    Product.init(modelAttributes, super.getDefaultModelConfig());
   }
 }
 
-FeatureFlag.initModel();
+Product.initModel();
